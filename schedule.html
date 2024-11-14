@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>일정 선호도 선택</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Triplanner</div>
+            <div class="nav-right">
+                <a href="#" onclick="handleHomeClick(event)">홈</a>
+                <a href="#" onclick="goToMyPath()">내 경로</a>
+                <a href="settings.html">설정</a>
+                <a href="#" id="logoutBtn" onclick="logout()">로그아웃</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>어떤 일정을 선호하시나요?</h2>
+        <p style="color: gray;">선호하는 일정 스타일을 선택해주세요</p>
+
+        <div class="schedule-container">
+            <div class="schedule-box" onclick="selectSchedule('tight')">
+                <span>빽빽한</span>
+                <p class="schedule-description">최대한 많은 곳을 방문하고 싶어요</p>
+            </div>
+            <div class="schedule-box" onclick="selectSchedule('relaxed')">
+                <span>널널한</span>
+                <p class="schedule-description">여유롭게 즐기고 싶어요</p>
+            </div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="prev-btn" onclick="goBackToCompanion()">이전</button>
+            <button class="next-btn" onclick="goToNextFromSchedule()">다음</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

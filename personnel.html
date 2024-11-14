@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인원수 선택</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Triplanner</div>
+            <div class="nav-right">
+                <a href="#" onclick="handleHomeClick(event)">홈</a>
+                <a href="#" onclick="goToMyPath()">내 경로</a>
+                <a href="settings.html">설정</a>
+                <a href="#" id="logoutBtn" onclick="logout()">로그아웃</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>인원수를 선택해주세요</h2>
+        <p style="color: gray;">함께 여행할 인원수를 선택해주세요</p>
+
+        <div class="personnel-container">
+            <div class="personnel-box" onclick="selectPersonnel(1)"><span>1</span></div>
+            <div class="personnel-box" onclick="selectPersonnel(2)"><span>2</span></div>
+            <div class="personnel-box" onclick="selectPersonnel(3)"><span>3</span></div>
+            <div class="personnel-box" onclick="selectPersonnel(4)"><span>4</span></div>
+            <div class="personnel-box" onclick="selectPersonnel(5)"><span>5</span></div>
+            <div class="personnel-box" onclick="selectPersonnel(6)"><span>6</span></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="prev-btn" onclick="goBackToDestination()">이전</button>
+            <button class="next-btn" onclick="goToCompanion()">다음</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

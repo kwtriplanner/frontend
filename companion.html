@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동행인 선택</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Triplanner</div>
+            <div class="nav-right">
+                <a href="#" onclick="handleHomeClick(event)">홈</a>
+                <a href="#" onclick="goToMyPath()">내 경로</a>
+                <a href="settings.html">설정</a>
+                <a href="#" id="logoutBtn" onclick="logout()">로그아웃</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>누구와 함께 가시나요?</h2>
+        <p style="color: gray;">함께 여행할 동행인을 선택해주세요</p>
+
+        <div class="companion-container">
+            <div class="companion-box" onclick="selectCompanion('alone')"><span>혼자</span></div>
+            <div class="companion-box" onclick="selectCompanion('family')"><span>가족</span></div>
+            <div class="companion-box" onclick="selectCompanion('friend')"><span>친구</span></div>
+            <div class="companion-box" onclick="selectCompanion('couple')"><span>연인</span></div>
+            <div class="companion-box" onclick="selectCompanion('spouse')"><span>부부</span></div>
+            <div class="companion-box" onclick="selectCompanion('group')"><span>모임(동호회 등)</span></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="prev-btn" onclick="goBack()">이전</button>
+            <button class="next-btn" onclick="goToNextFromCompanion()">다음</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

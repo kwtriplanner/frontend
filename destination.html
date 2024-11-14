@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행지 선택</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Triplanner</div>
+            <div class="nav-right">
+                <a href="#" onclick="handleHomeClick(event)">홈</a>
+                <a href="#" onclick="goToMyPath()">내 경로</a>
+                <a href="settings.html">설정</a>
+                <a href="#" id="logoutBtn" onclick="logout()">로그아웃</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>떠나고 싶은 도시는?</h2>
+        <p style="color: gray;">당신의 여행지를 선택해주세요</p>
+
+        <div class="city-container">
+            <div class="city-box" onclick="goToCity('Gangneung')"><span>강릉</span></div>
+            <div class="city-box" onclick="goToCity('Donghae')"><span>동해</span></div>            
+            <div class="city-box" onclick="goToCity('Sokcho')"><span>속초</span></div>
+            <div class="city-box" onclick="goToCity('Wonju')"><span>원주</span></div>
+            <div class="city-box" onclick="goToCity('Chuncheon')"><span>춘천</span></div>
+            <div class="city-box" onclick="goToCity('Pyeongchang')"><span>평창</span></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="next-btn" onclick="goToPersonnel()">다음</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

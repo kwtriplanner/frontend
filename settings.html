@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설정</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Triplanner</div>
+            <div class="nav-right">
+                <a href="#" onclick="handleHomeClick(event)">홈</a>
+                <a href="#" onclick="goToMyPath()">내 경로</a>
+                <a href="settings.html">설정</a>
+                <a href="#" id="logoutBtn" onclick="logout()">로그아웃</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container settings-container">
+        <h2>설정</h2>
+        
+        <!-- 프로필 관리 섹션 -->
+        <section class="settings-section">
+            <h3>프로필 관리</h3>
+            
+            <!-- 프로필 사진 -->
+            <div class="profile-image-section">
+                <img id="profileImage" src="default-profile.png" alt="프로필 사진" class="profile-image">
+                <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
+                <button onclick="document.getElementById('profileImageInput').click()">프로필 사진 변경</button>
+            </div>
+
+            <!-- 아이디 변경 -->
+            <div class="settings-item">
+                <h4>아이디 변경</h4>
+                <input type="text" id="newUsernameInput" placeholder="새로운 아이디">
+                <button onclick="changeUsername()">변경하기</button>
+            </div>
+
+            <!-- 비밀번호 변경 -->
+            <div class="settings-item">
+                <h4>비밀번호 변경</h4>
+                <input type="password" id="currentPassword" placeholder="현재 비밀번호">
+                <input type="password" id="newPassword" placeholder="새로운 비밀번호">
+                <input type="password" id="confirmNewPassword" placeholder="새로운 비밀번호 확인">
+                <button onclick="changePassword()">변경하기</button>
+            </div>
+        </section>
+
+        <!-- 데이터 및 계정 관리 섹션 -->
+        <section class="settings-section">
+            <h3>데이터 및 계정 관리</h3>
+            <div class="settings-item danger-zone">
+                <h4>계정 삭제</h4>
+                <p>주의: 계정을 삭제하면 모든 데이터가 영구적으로 삭제됩니다.</p>
+                <button class="delete-account-btn" onclick="deleteAccount()">계정 삭제</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

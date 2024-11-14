@@ -1,0 +1,769 @@
+/* 기본 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styling */
+header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: #2df0b2;
+}
+
+nav {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-right {
+    position: absolute;
+    right: 1px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-right a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+.nav-right a:hover {
+    opacity: 0.8;
+}
+
+.logout-btn {
+    color: white !important;
+    margin-left: 0 !important;
+}
+
+.logout-btn:hover {
+    opacity: 0.8;
+}
+
+/* Centered container */
+.container {
+    max-width: 300px;
+    text-align: center;
+    margin-top: 100px;
+}
+
+/* Main title and subtitle */
+h1 {
+    font-size: 2.5em;
+    color: #333;
+}
+
+h2 {
+    font-size: 1.2em;
+    color: #777;
+}
+
+/* Button styling */
+button {
+    background-color: #2df0b2;
+    color: white;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #2df0b2;
+}
+
+/* Login form styling */
+#loginForm {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#loginForm .form-group {
+    margin-bottom: 15px;
+}
+
+#loginForm h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#loginMessage {
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+form button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #2df0b2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.city-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 800px;
+}
+
+.city-box {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid transparent;
+}
+
+.city-box span {
+    writing-mode: horizontal-tb !important;
+    text-orientation: mixed !important;
+    white-space: nowrap;
+}
+
+.city-box:hover {
+    background-color: #e9ecef;
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.nav-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+.logout-btn {
+    color: white;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.logout-btn:hover {
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#signupMessage {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 20px 20px;
+}
+
+.settings-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.settings-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.settings-item h4 {
+    margin-bottom: 10px;
+}
+
+.settings-item input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.profile-image-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.danger-zone {
+    background-color: #fff8f8;
+    border: 1px solid #ffebeb;
+}
+
+.delete-account-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-account-btn:hover {
+    background-color: #c82333;
+}
+
+#authOptions button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#loginForm, #signupForm {
+    margin-top: 20px;
+}
+
+.settings-container h2 {
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 24px;
+}
+
+.destination-btn {
+    background-color: #ffffff !important;  
+    color: #2df0b2 !important;  
+    border: 2px solid #2df0b2 !important; 
+    margin-top: 20px !important;  
+    transition: all 0.3s ease;
+}
+
+.destination-btn:hover {
+    background-color: #2df0b2 !important;
+    color: white !important;
+}
+
+/*  일정 페이지 스타일 */
+.mypath-container {
+    max-width: 800px;
+    margin: 80px auto 0;
+    padding: 20px;
+}
+
+.mypath-container h2 {
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.path-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.path-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    color: black;
+}
+
+.path-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.path-title {
+    font-size: 20px;
+    color: black;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.path-date {
+    color: #666;
+    font-size: 14px;
+}
+
+.path-destinations {
+    color: black;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.path-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.path-actions button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.3s;
+}
+
+.edit-btn {
+    background-color: #2df0b2;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.no-paths {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.create-path-btn {
+    background-color: #2df0b2;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.create-path-btn:hover {
+    background-color: #25d1a0;
+}
+
+.nav-btn {
+    padding: 8px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.nav-btn:hover {
+    background-color: #45a049;
+}
+
+.edit-form {
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.destination-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.destination-item input,
+.destination-item textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.destination-item textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+.form-buttons {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.form-buttons button {
+    padding: 8px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-buttons button:first-child {
+    background-color: #2df0b2;
+    color: white;
+}
+
+.form-buttons button:last-child {
+    background-color: #f44336;
+    color: white;
+}
+
+.path-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.path-title-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.path-title-section h2 {
+    margin: 0;
+}
+
+.create-path-btn {
+    width: fit-content;
+    padding: 10px 20px;
+    background-color: #2df0b2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.create-path-btn:hover {
+    background-color: #25d1a0;
+}
+
+.destination-info h4 {
+    color: black;
+}
+
+.destination-info p {
+    color: black;
+}
+
+/* 인원수 선택 박스 스타일 */
+.personnel-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 30px 0;
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.personnel-box {
+    aspect-ratio: 1;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.personnel-box:hover {
+    background-color: #e0e0e0;
+}
+
+.personnel-box.selected {
+    background-color: #2df0b2;
+    color: white;
+    border-color: #2df0b2;
+}
+
+/* 네비게이션 버튼 스타일 */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.prev-btn, .next-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.prev-btn {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.next-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #2df0b2;
+    color: white;
+}
+
+.next-btn:hover {
+    background-color: #25d19b;
+}
+
+.prev-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.next-btn:hover {
+    background-color: #45a049;
+}
+
+.city-box.selected {
+    border-color: #2df0b2;
+    background-color: rgba(45, 240, 178, 0.1);
+}
+
+/* 동행인 선택 박스 스타일 */
+.companion-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 30px 0;
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.companion-box {
+    aspect-ratio: 1;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.companion-box span {
+    text-align: center;
+    padding: 10px;
+}
+
+.companion-box:hover {
+    background-color: #e0e0e0;
+}
+
+.companion-box.selected {
+    background-color: #2df0b2;
+    color: white;
+    border-color: #2df0b2;
+}
+
+/* 일정 선호도 선택 박스 스타일 */
+.schedule-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin: 30px auto;
+    max-width: 600px;
+}
+
+.schedule-box {
+    aspect-ratio: 1;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    padding: 20px;
+}
+
+.schedule-box span {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.schedule-description {
+    text-align: center;
+    color: #666;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+.schedule-box:hover {
+    background-color: #e0e0e0;
+}
+
+.schedule-box.selected {
+    background-color: #2df0b2;
+    color: white;
+    border-color: #2df0b2;
+}
+
+.schedule-box.selected .schedule-description {
+    color: white;
+}
+
+/* 활동 선택 박스 스타일 */
+.activity-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 600px;
+}
+
+.activity-box {
+    aspect-ratio: 1;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.activity-box span {
+    font-size: 1.2em;
+}
+
+.activity-box:hover {
+    background-color: #e0e0e0;
+}
+
+.activity-box.selected {
+    background-color: #2df0b2;
+    color: white;
+    border-color: #2df0b2;
+}
+
+/* 선택된 박스에 대한 시각적 피드백 강화 */
+.activity-box.selected span {
+    font-weight: bold;
+}
+
+.companion-box.disabled {
+    background-color: #e0e0e0 !important;
+    color: #999 !important;
+    cursor: not-allowed !important;
+    border-color: transparent !important;
+}
+
+.companion-box.disabled:hover {
+    background-color: #e0e0e0 !important;
+}
+
+/* 이동수단 선택 박스 스타일 */
+.transport-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 600px;
+}
+
+.transport-box {
+    aspect-ratio: 1;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.transport-box span {
+    font-size: 1.2em;
+}
+
+.transport-box:hover {
+    background-color: #e0e0e0;
+}
+
+.transport-box.selected {
+    background-color: #2df0b2;
+    color: white;
+    border-color: #2df0b2;
+}

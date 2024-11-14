@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선호 활동 선택</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Triplanner</div>
+            <div class="nav-right">
+                <a href="#" onclick="handleHomeClick(event)">홈</a>
+                <a href="#" onclick="goToMyPath()">내 경로</a>
+                <a href="settings.html">설정</a>
+                <a href="#" id="logoutBtn" onclick="logout()">로그아웃</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>어떤 종류의 활동을 선호하시나요?</h2>
+        <p style="color: gray;">선호하는 활동을 선택해주세요(중복가능)</p>
+
+        <div class="activity-container">
+            <div class="activity-box" onclick="selectActivity('nature')"><span>자연</span></div>
+            <div class="activity-box" onclick="selectActivity('history')"><span>역사</span></div>
+            <div class="activity-box" onclick="selectActivity('experience')"><span>체험</span></div>
+            <div class="activity-box" onclick="selectActivity('culture')"><span>문화</span></div>
+            <div class="activity-box" onclick="selectActivity('festival')"><span>축제</span></div>
+            <div class="activity-box" onclick="selectActivity('shopping')"><span>쇼핑</span></div>
+        </div>
+
+        <div class="navigation-buttons">
+            <button class="prev-btn" onclick="goBackToSchedule()">이전</button>
+            <button class="next-btn" onclick="goToNextFromActivity()">다음</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
