@@ -40,8 +40,9 @@ const Traffic = () => {
                 </button>
                 <button 
                     onClick={() => {
+                        console.log('Selected Transport:', selectedTransport); // 선택된 이동수단 로그
                         if (selectedTransport) {
-                            navigate('/final', { state: { selectedCity, selectedCount, selectedCompanion, selectedStyle, selectedActivity, selectedTransport } }); // 선택된 이동수단과 함께 다음으로 이동
+                            navigate('/recommend', { state: { selectedCity, selectedCount, selectedCompanion, selectedStyle, selectedActivity, selectedTransport } }); // 선택된 이동수단과 함께 다음으로 이동
                         } else {
                             alert('이동수단을 선택해주세요.'); // 선택하지 않았을 때 경고 메시지
                         }

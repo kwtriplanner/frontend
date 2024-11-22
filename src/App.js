@@ -7,23 +7,30 @@ import Companion from './components/Companion';
 import Density from './components/Density';
 import Activity from './components/Activity';
 import Traffic from './components/Traffic';
+import Recommend from './components/Recommend';
+import Settings from './components/Settings';
+import { PlanProvider } from './components/PlanContext';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/myplan" element={<MyPlan />} />
-          <Route path="/destination" element={<Destination />} />
-          <Route path="/persons" element={<Persons />} />
-          <Route path="/companion" element={<Companion />} />
-          <Route path="/density" element={<Density />} />
-          <Route path="/activity" element={<Activity />} />
-          <Route path="/traffic" element={<Traffic />} />
-        </Routes>
-      </div>
-    </Router>
+    <PlanProvider>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/myplan" element={<MyPlan />} />
+            <Route path="/destination" element={<Destination />} />
+            <Route path="/persons" element={<Persons />} />
+            <Route path="/companion" element={<Companion />} />
+            <Route path="/density" element={<Density />} />
+            <Route path="/activity" element={<Activity />} />
+            <Route path="/traffic" element={<Traffic />} />
+            <Route path="/recommend" element={<Recommend />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </div>
+      </Router>
+    </PlanProvider>
   );
 }
 
