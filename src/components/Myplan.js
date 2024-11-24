@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // useNavigate 가져오기
 import { PlanContext } from '../components/PlanContext'; // PlanContext 가져오기
 import Navbar from './Navbar'; // Navbar 컴포넌트 가져오기
@@ -8,6 +8,17 @@ const MyPlan = () => {
     const { plans, setPlans } = useContext(PlanContext); // Context에서 plans 가져오기
     const [editingPlanIndex, setEditingPlanIndex] = useState(null); // 수정 중인 일정 인덱스 상태
     const [editedItems, setEditedItems] = useState([]); // 수정된 항목 상태
+
+    // 컴포넌트가 마운트될 때 localStorage에서 저장된 일정을 불러오기
+    useEffect(() => {
+        const savedPlans = JSON.parse(localStorage.getItem('plans')) || [];
+        setPlans(savedPlans);
+    }, [setPlans]);
+
+    // plans가 변경될 때마다 localStorage에 저장하기
+    useEffect(() => {
+        localStorage.setItem('plans', JSON.stringify(plans));
+    }, [plans]);
 
     const handleEdit = (index) => {
         setEditingPlanIndex(index); // 수정할 일정 인덱스 설정
@@ -39,6 +50,12 @@ const MyPlan = () => {
             <Navbar /> {/* 네비게이션 바 추가 */}
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
                 <h1>내 일정</h1>
+                <button 
+                    onClick={() => navigate('/destination')} 
+                    style={{ marginTop: '20px', backgroundColor: '#2df0b2', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}
+                >
+                    일정 만들러 가기
+                </button> {/* Destination.js로 이동 */}
                 <div style={{ marginTop: '20px' }}>
                     {plans.length === 0 ? (
                         <p>저장된 일정이 없습니다</p>

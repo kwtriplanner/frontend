@@ -56,7 +56,7 @@ const Activity = () => {
                             alert('활동을 선택해주세요.'); // 선택하지 않았을 때 경고 메시지
                         }
                     }} 
-                    style={{ padding: '10px 20px' }}
+                    className="next-button" // CSS 클래스 추가
                 >
                     다음
                 </button>

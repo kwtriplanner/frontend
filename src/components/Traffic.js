@@ -8,6 +8,50 @@ const Traffic = () => {
     const { selectedCity, selectedCount, selectedCompanion, selectedStyle, selectedActivity } = location.state || {}; // 선택된 도시, 인원수, 동행인, 일정 스타일, 선택된 활동 정보 가져오기
     const [selectedTransport, setSelectedTransport] = React.useState(null); // 선택된 이동수단 상태 추가
 
+    const handleNext = () => {
+        // 선택된 데이터 로그
+        console.log('Selected Transport:', selectedTransport);
+        
+        // 백엔드로 데이터 전송 (주석 처리)
+        /*
+        fetch('YOUR_BACKEND_API_URL', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                selectedCity,
+                selectedCount,
+                selectedCompanion,
+                selectedStyle,
+                selectedActivity,
+                selectedTransport,
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            // 다음 페이지로 이동
+            navigate('/recommend', { state: { selectedCity, selectedCount, selectedCompanion, selectedStyle, selectedActivity, selectedTransport } });
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+        */
+
+        // 선택된 이동수단이 있을 경우에만 다음으로 이동
+        if (selectedTransport) {
+            navigate('/recommend', { state: { selectedCity, selectedCount, selectedCompanion, selectedStyle, selectedActivity, selectedTransport } }); // 선택된 이동수단과 함께 다음으로 이동
+        } else {
+            alert('이동수단을 선택해주세요.'); // 선택하지 않았을 때 경고 메시지
+        }
+    };
+
     return (
         <div>
             <Navbar /> {/* 네비게이션 바 추가 */}

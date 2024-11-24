@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'; // useNavigate 가져오기
 import Login from './Login'; // 기본 내보내기
 import Signup from './Signup'; // 기본 내보내기
 import Navbar from './Navbar'; // Navbar 컴포넌트 가져오기
+import './Home.css'; // CSS 파일 가져오기
 
 function Home() {
     const [showLogin, setShowLogin] = useState(false);
@@ -31,8 +32,8 @@ function Home() {
                 <h1>Triplanner</h1>
                 <p>AI 여행일정 추천</p>
                 <div>
-                    <button onClick={handleLoginClick}>로그인</button>
-                    <button onClick={handleSignupClick}>회원가입</button>
+                    <button className="button" onClick={handleLoginClick}>로그인</button>
+                    <button className="button" onClick={handleSignupClick} style={{ marginLeft: '10px' }}>회원가입</button>
                 </div>
                 {showLogin && <Login onLoginSuccess={handleLoginSuccess} />}
                 {showSignup && <Signup />}
