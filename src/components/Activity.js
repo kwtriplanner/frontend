@@ -45,7 +45,10 @@ const Activity = () => {
                     ))}
                 </div>
                 {/* 이전 버튼과 다음 버튼 추가 */}
-                <button onClick={() => navigate('/density', { state: { selectedCity, selectedCount, selectedCompanion, selectedStyle, selectedActivity: selectedActivities } })} style={{ marginRight: '10px', padding: '10px 20px' }}>
+                <button 
+                    onClick={() => navigate('/density', { state: { selectedCity, selectedCount, selectedCompanion, selectedStyle, selectedActivity: selectedActivities } })} 
+                    style={{ marginRight: '10px', padding: '10px 20px' }} // 이전 버튼 스타일
+                >
                     이전
                 </button>
                 <button 
@@ -56,7 +59,7 @@ const Activity = () => {
                             alert('활동을 선택해주세요.'); // 선택하지 않았을 때 경고 메시지
                         }
                     }} 
-                    className="next-button" // CSS 클래스 추가
+                    style={{ padding: '10px 20px' }} // 다음 버튼 스타일
                 >
                     다음
                 </button>

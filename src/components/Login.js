@@ -37,7 +37,7 @@ function Login({ onLoginSuccess }) {
         });
         */
 
-        // 기존 로컬 스토리지 로그인 로직 (주석 처리 후 삭제 가능)
+        // 기존 로컬 스토리지 로그인 로직(여기부터 삭제)
         const storedUser = JSON.parse(localStorage.getItem('user'));
         if (storedUser && storedUser.username === username && storedUser.password === password) {
             alert('로그인 성공!');
