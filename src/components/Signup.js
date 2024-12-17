@@ -7,8 +7,10 @@ function Signup() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSignup = () => {
+        if (isSubmitting) return;
         if (password !== confirmPassword) {
             alert('비밀번호가 일치하지 않습니다.');
             return;
@@ -23,38 +25,38 @@ function Signup() {
         };
 
         // 백엔드 API 호출 (주석 처리)
-        /*
+        setIsSubmitting(true);
         fetch('http://localhost:8086/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(userData),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('회원가입 실패');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // 회원가입 성공 시 처리
-            if (data.success) {
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 409) {
+                        alert('이미 사용 중인 아이디입니다.');
+                    } else {
+                        alert('회원가입 실패');
+                    }
+                    throw new Error('회원가입 실패');
+                }
                 alert('회원가입이 완료되었습니다.');
-                // 추가적인 처리 (예: 로그인 페이지로 이동)
-            } else {
+            })
+            .catch(error => {
+                console.error('Error:', error);
                 alert('회원가입 중 오류가 발생했습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('회원가입 중 오류가 발생했습니다.');
-        });
-        */
+            })
+            .finally(() => {
+                setIsSubmitting(false);
+            });
+
 
         // 기존 로컬 스토리지 회원가입 로직
-        localStorage.setItem('user', JSON.stringify(userData));
-        alert('회원가입이 완료되었습니다.');
+        // localStorage.setItem('user', JSON.stringify(userData));
+        // alert('회원가입이 완료되었습니다.');
     };
 
     return (

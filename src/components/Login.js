@@ -7,7 +7,7 @@ function Login({ onLoginSuccess }) {
 
     const handleLogin = () => {
         // 백엔드 API 호출 (주석 처리)
-        /*
+
         fetch('http://localhost:8086/api/auth/login', {
             method: 'POST',
             headers: {
@@ -15,36 +15,35 @@ function Login({ onLoginSuccess }) {
             },
             body: JSON.stringify({ username, password }),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('로그인 실패');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // 로그인 성공 시 처리
-            if (data.success) {
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('로그인 실패');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 로그인 성공 시 처리
                 alert('로그인 성공!');
-                localStorage.setItem('user', JSON.stringify(data.user)); // 사용자 정보를 localStorage에 저장
-                onLoginSuccess(); // 로그인 성공 시 호출
-            } else {
-                alert('아이디 또는 비밀번호가 잘못되었습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('로그인 중 오류가 발생했습니다.');
-        });
-        */
+                localStorage.setItem('user', JSON.stringify(data)); // 사용자 정보를 저장
+                // const ud = JSON.parse(localStorage.getItem('user'));
+                // console.log(ud?.username);
+                // console.log(ud?.token);
+                onLoginSuccess(); // 성공 후 호출
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('로그인 중 오류가 발생했습니다.');
+            });
+
 
         // 기존 로컬 스토리지 로그인 로직(여기부터 삭제)
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        if (storedUser && storedUser.username === username && storedUser.password === password) {
-            alert('로그인 성공!');
-            onLoginSuccess(); // 로그인 성공 시 호출
-        } else {
-            alert('아이디 또는 비밀번호가 잘못되었습니다.');
-        }
+        // const storedUser = JSON.parse(localStorage.getItem('user'));
+        // if (storedUser && storedUser.username === username && storedUser.password === password) {
+        //     alert('로그인 성공!');
+        //     onLoginSuccess(); // 로그인 성공 시 호출
+        // } else {
+        //     alert('아이디 또는 비밀번호가 잘못되었습니다.');
+        // }
     }; // 여기까지 삭제
 
     return (
