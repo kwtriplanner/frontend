@@ -77,7 +77,7 @@ const Recommend = () => {
 
     return (
         <div>
-            <Navbar /> {/* ���비게이션 바 추가 */}
+            <Navbar /> {/* 네비게이션 바 추가 */}
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
                 <h1>추천 여행지</h1>
                 <h2>{selectedCity}에서의 추천</h2>
