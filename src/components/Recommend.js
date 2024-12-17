@@ -12,34 +12,21 @@ const Recommend = () => {
     const [error, setError] = useState(null); // 오류 상태 추가
 
     const handleSaveAllPlans = () => {
+        // 전체 추천 항목을 백엔드에 저장하는 함수
         const allItems = {
-            추천된관광지: recommendations['추천된 관광지'].map(spot => ({
-                title: spot.title,
-                address: spot.address,
-                mapx: spot.mapx,
-                mapy: spot.mapy
-            })),
-            추천된숙박: recommendations['추천된 숙박'].map(spot => ({
-                title: spot.title,
-                address: spot.address,
-                mapx: spot.mapx,
-                mapy: spot.mapy
-            })),
-            추천된음식점: recommendations['추천된 음식점'].map(spot => ({
-                title: spot.title,
-                address: spot.address,
-                mapx: spot.mapx,
-                mapy: spot.mapy
-            })),
+            추천된관광지: recommendations['추천된 관광지'] || [],
+            추천된숙박: recommendations['추천된 숙박'] || [],
+            추천된음식점: recommendations['추천된 음식점'] || [],
         };
 
+        // 백엔드에 저장 요청
         fetch('http://127.0.0.1:5000/api/plans', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`, // 로그인된 사용자 토큰
             },
-            body: JSON.stringify(allItems),
+            body: JSON.stringify(allItems), // 저장할 데이터
         })
         .then(response => {
             if (!response.ok) {
@@ -48,15 +35,16 @@ const Recommend = () => {
             return response.json();
         })
         .then(data => {
-            console.log('All plans saved:', data);
+            console.log('All plans saved:', data); // 저장 성공 시 로그
             // 추가적인 상태 업데이트가 필요할 경우 여기에 추가
         })
         .catch(error => {
-            console.error('Error saving plans:', error);
+            console.error('Error saving plans:', error); // 오류 발생 시 로그
         });
     };
 
     const fetchRecommendations = () => {
+        // 추천 데이터 가져오기
         fetch('http://127.0.0.1:5000/recommend', {
             method: 'POST',
             headers: {
