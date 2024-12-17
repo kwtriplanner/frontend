@@ -31,6 +31,24 @@ const MyPlan = () => {
         });
     }, [setPlans]);
 
+    const handleDelete = (planId) => {
+        fetch(`http://127.0.0.1:5000/api/plans/${planId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete plan');
+            }
+            setPlans(plans.filter(plan => plan.id !== planId));
+        })
+        .catch(error => {
+            console.error('Error deleting plan:', error);
+        });
+    };
+
     return (
         <div>
             <Navbar />
@@ -43,12 +61,49 @@ const MyPlan = () => {
                         {plans.length === 0 ? (
                             <p>저장된 일정이 없습니다</p>
                         ) : (
-                            plans.map((plan, index) => (
-                                <div key={index}>
-                                    <p>{plan.name}</p>
+                            plans.map((plan) => (
+                                <div key={plan.id || plan.name} style={{ 
+                                    border: '1px solid #ddd',
+                                    margin: '10px',
+                                    padding: '15px',
+                                    borderRadius: '8px'
+                                }}>
+                                    <div style={{ 
+                                        display: 'flex', 
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center'
+                                    }}>
+                                        <p style={{ fontWeight: 'bold', margin: 0 }}>{plan.name}</p>
+                                        <button
+                                            onClick={() => handleDelete(plan.id)}
+                                            style={{
+                                                backgroundColor: '#ff4444',
+                                                color: 'white',
+                                                border: 'none',
+                                                padding: '5px 10px',
+                                                borderRadius: '5px',
+                                                cursor: 'pointer'
+                                            }}
+                                        >
+                                            삭제
+                                        </button>
+                                    </div>
                                     <ul>
-                                        {plan.items.map((item, itemIndex) => (
-                                            <li key={itemIndex}>{item}</li>
+                                        {plan.items.map((item) => (
+                                            <li key={item.id || item.title || item}>
+                                                {item.title ? (
+                                                    <>
+                                                        <a href={`https://www.google.com/maps/search/?api=1&query=${item.mapy},${item.mapx}`} 
+                                                           target="_blank" 
+                                                           rel="noopener noreferrer">
+                                                            {item.title}
+                                                        </a>
+                                                        <p>{item.address}</p>
+                                                    </>
+                                                ) : (
+                                                    item
+                                                )}
+                                            </li>
                                         ))}
                                     </ul>
                                 </div>

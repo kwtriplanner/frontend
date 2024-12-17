@@ -12,11 +12,25 @@ const Recommend = () => {
     const [error, setError] = useState(null); // 오류 상태 추가
 
     const handleSaveAllPlans = () => {
-        // 전체 추천 항목을 백엔드에 저장하는 함수
         const allItems = {
-            추천된관광지: recommendations['추천된 관광지'] || [],
-            추천된숙박: recommendations['추천된 숙박'] || [],
-            추천된음식점: recommendations['추천된 음식점'] || [],
+            추천된관광지: recommendations['추천된 관광지'].map(spot => ({
+                title: spot.title,
+                address: spot.address,
+                mapx: spot.mapx,
+                mapy: spot.mapy
+            })),
+            추천된숙박: recommendations['추천된 숙박'].map(spot => ({
+                title: spot.title,
+                address: spot.address,
+                mapx: spot.mapx,
+                mapy: spot.mapy
+            })),
+            추천된음식점: recommendations['추천된 음식점'].map(spot => ({
+                title: spot.title,
+                address: spot.address,
+                mapx: spot.mapx,
+                mapy: spot.mapy
+            })),
         };
 
         fetch('http://127.0.0.1:5000/api/plans', {
