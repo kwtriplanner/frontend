@@ -12,20 +12,17 @@ const Traffic = () => {
         // 선택된 데이터 로그
         console.log('Selected Transport:', selectedTransport);
         
-        // 백엔드로 데이터 전송 (주석 처리)
-        /*
-        fetch('YOUR_BACKEND_API_URL', {
+        // 백엔드로 데이터 전송
+        fetch('http://127.0.0.1:5000/recommend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                selectedCity,
-                selectedCount,
-                selectedCompanion,
-                selectedStyle,
-                selectedActivity,
-                selectedTransport,
+                장소: selectedCity, // 선택된 도시
+                이동수단: selectedTransport, // 선택된 이동수단
+                일정: selectedStyle, // 일정 스타일
+                카테고리: selectedActivity, // 선택된 활동
             }),
         })
         .then(response => {
@@ -42,12 +39,9 @@ const Traffic = () => {
         .catch((error) => {
             console.error('Error:', error);
         });
-        */
 
         // 선택된 이동수단이 있을 경우에만 다음으로 이동
-        if (selectedTransport) {
-            navigate('/recommend', { state: { selectedCity, selectedCount, selectedCompanion, selectedStyle, selectedActivity, selectedTransport } }); // 선택된 이동수단과 함께 다음으로 이동
-        } else {
+        if (!selectedTransport) {
             alert('이동수단을 선택해주세요.'); // 선택하지 않았을 때 경고 메시지
         }
     };
