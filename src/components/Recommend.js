@@ -43,11 +43,12 @@ const Recommend = () => {
     };
 
     const fetchRecommendations = () => {
-        // 추천 데이터 가져오기 
+        const token = localStorage.getItem('token'); // 토큰 가져오기
         fetch('http://localhost:8086/recommend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, // 토큰이 올바르게 설정되어 있는지 확인
             },
             body: JSON.stringify({
                 장소: selectedCity,
@@ -63,12 +64,12 @@ const Recommend = () => {
             return response.json();
         })
         .then(data => {
-            console.log('Fetched recommendations:', data); // 응답 데이터 확인
-            setRecommendations(data); // 추천 데이터 설정
+            console.log('Fetched recommendations:', data);
+            setRecommendations(data);
         })
         .catch(error => {
             console.error('Error fetching recommendations:', error);
-            setError('추천 데이터를 불러오는 데 실패했습니다.'); // 오류 메시지 설정
+            setError('추천 데이터를 불러오는 데 실패했습니다.');
         });
     };
 
@@ -116,7 +117,7 @@ const Recommend = () => {
                             <p>추천된 숙박이 없습니다.</p>
                         )}
                         <h3>추천된 음식점</h3>
-                        {recommendations['추천된 음식점'] && recommendations['추천된 음식점'].length > 0 ? (
+                        {recommendations['추천된 음식점'] && recommendations['추천된 음식���'].length > 0 ? (
                             recommendations['추천된 음식점'].map((restaurant) => (
                                 <div key={restaurant.title} style={{ marginBottom: '20px' }}>
                                     <h4>
