@@ -44,7 +44,7 @@ const Recommend = () => {
 
     const fetchRecommendations = () => {
         const token = localStorage.getItem('token'); // 토큰 가져오기
-        fetch('http://localhost:8086/recommend', {
+        fetch('http://127.0.0.1:5000/recommend  ', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
