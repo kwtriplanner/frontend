@@ -20,7 +20,7 @@ const Recommend = () => {
         };
 
         // 백엔드에 저장 요청
-        fetch('http://127.0.0.1:5000/api/plans', {
+        fetch('http://localhost:8086/api/plans', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,7 +36,6 @@ const Recommend = () => {
         })
         .then(data => {
             console.log('All plans saved:', data); // 저장 성공 시 로그
-            // 추가적인 상태 업데이트가 필요할 경우 여기에 추가
         })
         .catch(error => {
             console.error('Error saving plans:', error); // 오류 발생 시 로그
@@ -44,8 +43,8 @@ const Recommend = () => {
     };
 
     const fetchRecommendations = () => {
-        // 추천 데이터 가져오기
-        fetch('http://127.0.0.1:5000/recommend', {
+        // 추천 데이터 가져오기 
+        fetch('http://localhost:8086/recommend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +80,7 @@ const Recommend = () => {
         <div>
             <Navbar /> {/* 네비게이션 바 추가 */}
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
-                <h1>추천 여행지</h1>
+                <h1>추천된 여행지</h1>
                 <h2>{selectedCity}에서의 추천</h2>
                 {error && <p>{error}</p>} {/* 오류 메시지 표시 */}
                 {recommendations ? (

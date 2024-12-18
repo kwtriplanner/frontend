@@ -9,7 +9,7 @@ const MyPlan = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:5000/api/plans', {
+        fetch('http://localhost:8086/api/plans', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -32,7 +32,7 @@ const MyPlan = () => {
     }, [setPlans]);
 
     const handleDelete = (planId) => {
-        fetch(`http://127.0.0.1:5000/api/plans/${planId}`, {
+        fetch(`http://localhost:8086/api/plans/${planId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
