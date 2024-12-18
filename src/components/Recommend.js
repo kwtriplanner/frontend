@@ -10,6 +10,7 @@ const Recommend = () => {
 
     const [recommendations, setRecommendations] = useState(null); // 추천 데이터 상태 추가
     const [error, setError] = useState(null); // 오류 상태 추가
+    const [successMessage, setSuccessMessage] = useState(''); // 성공 메시지 상태 추가
 
     const handleSaveAllPlans = () => {
         // 전체 추천 항목을 백엔드에 저장하는 함수
@@ -36,15 +37,17 @@ const Recommend = () => {
         })
         .then(data => {
             console.log('All plans saved:', data); // 저장 성공 시 로그
+            setSuccessMessage('저장되었습니다.'); // 성공 메시지 설정
         })
         .catch(error => {
             console.error('Error saving plans:', error); // 오류 발생 시 로그
+            setError('저장에 실패했습니다.'); // 오류 메시지 설정
         });
     };
 
     const fetchRecommendations = () => {
         const token = localStorage.getItem('token'); // 토큰 가져오기
-        fetch('http://127.0.0.1:5000/recommend  ', {
+        fetch('http://127.0.0.1:5000/recommend', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -65,11 +68,11 @@ const Recommend = () => {
         })
         .then(data => {
             console.log('Fetched recommendations:', data);
-            setRecommendations(data);
+            setRecommendations(data); // 추천 데이터 설정
         })
         .catch(error => {
             console.error('Error fetching recommendations:', error);
-            setError('추천 데이터를 불러오는 데 실패했습니다.');
+            setError('추천 데이터를 불러오는 데 실패했습니다.'); // 오류 메시지 설정
         });
     };
 
@@ -81,9 +84,10 @@ const Recommend = () => {
         <div>
             <Navbar /> {/* 네비게이션 바 추가 */}
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
-                <h1>추천된 여행지</h1>
+                <h1>추천 여행지</h1>
                 <h2>{selectedCity}에서의 추천</h2>
                 {error && <p>{error}</p>} {/* 오류 메시지 표시 */}
+                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>} {/* 성공 메시지 표시 */}
                 {recommendations ? (
                     <div>
                         <h3>추천된 관광지</h3>
@@ -117,7 +121,7 @@ const Recommend = () => {
                             <p>추천된 숙박이 없습니다.</p>
                         )}
                         <h3>추천된 음식점</h3>
-                        {recommendations['추천된 음식점'] && recommendations['추천된 음식���'].length > 0 ? (
+                        {recommendations['추천된 음식점'] && recommendations['추천된 음식점'].length > 0 ? (
                             recommendations['추천된 음식점'].map((restaurant) => (
                                 <div key={restaurant.title} style={{ marginBottom: '20px' }}>
                                     <h4>
