@@ -49,6 +49,12 @@ const MyPlan = () => {
         });
     };
 
+    const [expandedPlanId, setExpandedPlanId] = useState(null);
+
+    const toggleDetails = (planId) => {
+        setExpandedPlanId(expandedPlanId === planId ? null : planId);
+    };
+
     return (
         <div>
             <Navbar />
@@ -88,24 +94,22 @@ const MyPlan = () => {
                                             삭제
                                         </button>
                                     </div>
-                                    <ul>
-                                        {plan.items.map((item) => (
-                                            <li key={item.id || item.title || item}>
-                                                {item.title ? (
-                                                    <>
-                                                        <a href={`https://www.google.com/maps/search/?api=1&query=${item.mapy},${item.mapx}`} 
-                                                           target="_blank" 
-                                                           rel="noopener noreferrer">
-                                                            {item.title}
-                                                        </a>
-                                                        <p>{item.address}</p>
-                                                    </>
-                                                ) : (
-                                                    item
-                                                )}
-                                            </li>
-                                        ))}
-                                    </ul>
+                                    <button 
+                                        onClick={() => toggleDetails(plan.id)} 
+                                        style={{ marginTop: '10px', backgroundColor: '#2df0b2', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
+                                    >
+                                        {expandedPlanId === plan.id ? '상세보기 닫기' : '상세보기'}
+                                    </button>
+                                    {expandedPlanId === plan.id && (
+                                        <ul style={{ marginTop: '10px' }}>
+                                            {plan.items.map((item) => (
+                                                <li key={item.id || item.title || item}>
+                                                    <p style={{ fontWeight: 'bold' }}>{item.title}</p>
+                                                    <p>{item.address}</p>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
                                 </div>
                             ))
                         )}
