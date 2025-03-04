@@ -8,7 +8,7 @@ const Navbar = () => {
     const handleHomeClick = () => {
         navigate('/destination', { state: {} });
     };
-    
+
     const handleMyPlanClick = () => {
         navigate('/myplan');
     };
@@ -18,10 +18,19 @@ const Navbar = () => {
     };
 
     const handleLogout = () => {
-        // 로그아웃 로직 (예: localStorage에서 사용자 정보 삭제)
-        localStorage.removeItem('user'); // 사용자 정보 삭제
+        // 로그아웃 처리
+        localStorage.removeItem('username'); // 사용자 정보 삭제
+        localStorage.removeItem('token'); // 토큰 삭제
         navigate('/login'); // 로그인 페이지로 이동
     };
+
+    const handleLogin = () => {
+        // 로그인 페이지로 이동
+        navigate('/login');
+    };
+
+    // localStorage에서 토큰 여부 확인
+    const isLoggedIn = !!localStorage.getItem('token');
 
     return (
         <nav className="navbar">
@@ -33,10 +42,14 @@ const Navbar = () => {
                 <button onClick={handleHomeClick} style={{ marginRight: '10px' }}>홈</button>
                 <button onClick={handleMyPlanClick} style={{ marginRight: '10px' }}>내 일정</button>
                 <button onClick={handleSettingsClick} style={{ marginRight: '10px' }}>설정</button>
-                <button onClick={handleLogout}>로그아웃</button>
+                {isLoggedIn ? (
+                    <button onClick={handleLogout} style={{ marginRight: '10px' }}>로그아웃</button>
+                ) : (
+                    <button onClick={handleLogin} style={{ marginRight: '10px' }}>로그인</button>
+                )}
             </div>
         </nav>
     );
 };
 
-export default Navbar; 
+export default Navbar;

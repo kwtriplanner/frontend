@@ -15,9 +15,10 @@ const Recommend = () => {
     const handleSaveAllPlans = () => {
         // 전체 추천 항목을 백엔드에 저장하는 함수
         const allItems = {
-            추천된관광지: recommendations['추천된 관광지'] || [],
-            추천된숙박: recommendations['추천된 숙박'] || [],
-            추천된음식점: recommendations['추천된 음식점'] || [],
+            username: localStorage.getItem("username"),
+            추천된관광지: (recommendations['추천된 관광지'] || []).map(item => item.title),
+            추천된숙박: (recommendations['추천된 숙박'] || []).map(item => item.title),
+            추천된음식점: (recommendations['추천된 음식점'] || []).map(item => item.title),
         };
 
         // 백엔드에 저장 요청
@@ -29,20 +30,21 @@ const Recommend = () => {
             },
             body: JSON.stringify(allItems), // 저장할 데이터
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to save plans');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('All plans saved:', data); // 저장 성공 시 로그
-            setSuccessMessage('저장되었습니다.'); // 성공 메시지 설정
-        })
-        .catch(error => {
-            console.error('Error saving plans:', error); // 오류 발생 시 로그
-            setError('저장에 실패했습니다.'); // 오류 메시지 설정
-        });
+            .then(response => {
+                console.log(localStorage.getItem('token'))
+                console.log(JSON.stringify(allItems))
+                if (!response.ok) {
+                    throw new Error('Failed to save plans');
+                }
+
+                console.log('All plans saved:'); // 저장 성공 시 로그
+                setSuccessMessage('저장되었습니다.'); // 성공 메시지 설정
+                return response.json();
+            })
+            .catch(error => {
+                console.error('Error saving plans:', error); // 오류 발생 시 로그
+                // setError('저장에 실패했습니다.'); // 오류 메시지 설정
+            });
     };
 
     const fetchRecommendations = () => {
@@ -60,20 +62,20 @@ const Recommend = () => {
                 카테고리: selectedActivity,
             }),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Fetched recommendations:', data);
-            setRecommendations(data); // 추천 데이터 설정
-        })
-        .catch(error => {
-            console.error('Error fetching recommendations:', error);
-            setError('추천 데이터를 불러오는 데 실패했습니다.'); // 오류 메시지 설정
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Fetched recommendations:', data);
+                setRecommendations(data); // 추천 데이터 설정
+            })
+            .catch(error => {
+                console.error('Error fetching recommendations:', error);
+                setError('추천 데이터를 불러오는 데 실패했습니다.'); // 오류 메시지 설정
+            });
     };
 
     useEffect(() => {

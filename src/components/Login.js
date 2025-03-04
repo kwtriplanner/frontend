@@ -24,7 +24,10 @@ function Login({ onLoginSuccess }) {
             .then(data => {
                 // 로그인 성공 시 처리
                 alert('로그인 성공!');
-                localStorage.setItem('user', JSON.stringify(data)); // 사용자 정보를 저장
+                localStorage.setItem('username', data.username);
+                localStorage.setItem('token', data.token);
+
+                console.log(JSON.stringify(data));
                 // const ud = JSON.parse(localStorage.getItem('user'));
                 // console.log(ud?.username);
                 // console.log(ud?.token);
