@@ -109,9 +109,9 @@ const MyPlan = () => {
                                         ))}
                                     </ul>
                                 </div>
-                            )}
+                            ))
+                        )}
                     </div>
-                ))
                 )}
                 <button
                     onClick={() => navigate('/destination')}
@@ -132,4 +132,4 @@ const MyPlan = () => {
     );
 };
 
-export default MyPlan
+export default MyPlan;
