@@ -109,9 +109,9 @@ const MyPlan = () => {
                                         ))}
                                     </ul>
                                 </div>
-                            )}
+                            ))
+                        )}
                     </div>
-                ))
                 )}
                 <button
                     onClick={() => navigate('/destination')}
