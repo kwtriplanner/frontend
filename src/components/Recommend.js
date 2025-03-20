@@ -43,7 +43,7 @@ const Recommend = () => {
             })
             .catch(error => {
                 console.error('Error saving plans:', error); // 오류 발생 시 로그
-                // setError('저장에 실패했습니다.'); // 오류 메시지 설정
+                 setError('저장에 실패했습니다.'); // 오류 메시지 설정
             });
     };
 
