@@ -18,10 +18,12 @@ const Navbar = () => {
     };
 
     const handleLogout = () => {
-        // 로그아웃 처리
-        localStorage.removeItem('username'); // 사용자 정보 삭제
-        localStorage.removeItem('token'); // 토큰 삭제
-        navigate('/login'); // 로그인 페이지로 이동
+        // 기존의 로그아웃 처리
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        
+        // 루트 경로('/')로 이동
+        navigate('/');
     };
 
     const handleLogin = () => {
