@@ -140,24 +140,6 @@ const MyPlan = () => {
                 alert('일정 삭제에 실패했습니다.');
             });
         }
-
-        /* 백엔드 연동 코드드
-        fetch(`http://localhost:8086/api/plans/${planId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            },
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to delete plan');
-                }
-                setPlans(plans.filter(plan => plan.id !== planId));
-            })
-            .catch(error => {
-                console.error('Error deleting plan:', error);
-            });
-        */
     };
 
     const handlePlaceDetailClick = (placeId, placeName) => {
@@ -220,7 +202,7 @@ const MyPlan = () => {
             if (!response.ok) {
                 throw new Error('Failed to save review');
             }
-            return response.json();
+            return response.text();
         })
         .then(data => {
             setReviews(prev => ({
