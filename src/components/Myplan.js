@@ -85,7 +85,7 @@ const MyPlan = () => {
     const navigate = useNavigate();
     const { plans, setPlans } = useContext(PlanContext);
     const [loading, setLoading] = useState(true);
-    const [expandedPlaceId, setExpandedPlaceId] = useState(null);
+    const [expandedPlaces, setExpandedPlaces] = useState({});
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [reviews, setReviews] = useState({});
@@ -142,15 +142,21 @@ const MyPlan = () => {
         }
     };
 
-    const handlePlaceDetailClick = (placeId, placeName) => {
-        if (expandedPlaceId === placeId) {
-            setExpandedPlaceId(null);
+    const handlePlaceDetailClick = (planIndex, placeId, placeName) => {
+        const expandedKey = `${planIndex}-${placeId}`;
+        
+        if (expandedPlaces[expandedKey]) {
+            // 이미 열려있는 경우 닫기
+            setExpandedPlaces(prev => {
+                const newState = { ...prev };
+                delete newState[expandedKey];
+                return newState;
+            });
             return;
         }
 
-        setExpandedPlaceId(placeId);
+        // 새로운 장소 세부정보 열기
         setLoadingDetails(true);
-
         fetch(`http://localhost:8086/api/place/${encodeURIComponent(placeName)}`, {
             method: 'GET',
             headers: {
@@ -167,6 +173,10 @@ const MyPlan = () => {
             setPlaceDetails(prev => ({
                 ...prev,
                 [placeName]: data
+            }));
+            setExpandedPlaces(prev => ({
+                ...prev,
+                [expandedKey]: true
             }));
             setLoadingDetails(false);
         })
@@ -228,67 +238,71 @@ const MyPlan = () => {
         });
     };
 
-    const renderPlaceList = (items, category) => {
-        return items?.map((item, i) => (
-            <li key={`${category}-${i}`} style={{ marginBottom: '10px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>{item}</span>
-                    <button
-                        onClick={() => handlePlaceDetailClick(`${category}-${i}`, item)}
-                        style={{
-                            backgroundColor: '#4CAF50',
-                            color: 'white',
-                            border: 'none',
-                            padding: '5px 10px',
-                            borderRadius: '5px',
-                            cursor: 'pointer',
-                            marginLeft: '10px'
-                        }}
-                    >
-                        장소 세부정보
-                    </button>
-                </div>
-                {expandedPlaceId === `${category}-${i}` && (
-                    <div style={{ marginTop: '10px', marginLeft: '20px' }}>
-                        {loadingDetails ? (
-                            <p>세부정보를 불러오는 중...</p>
-                        ) : placeDetails[item]?.reviews?.length > 0 ? (
-                            <div>
-                                <h4>리뷰 목록</h4>
-                                {placeDetails[item].reviews.map((review, index) => (
-                                    <div key={index} style={{
-                                        backgroundColor: '#f5f5f5',
-                                        padding: '10px',
-                                        marginBottom: '10px',
-                                        borderRadius: '5px'
-                                    }}>
-                                        <p><strong>별점:</strong> {'★'.repeat(review.rating)}</p>
-                                        <p><strong>내용:</strong> {review.content}</p>
-                                        <p><strong>작성일:</strong> {new Date(review.createdAt).toLocaleDateString('ko-KR')}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p>작성된 리뷰가 없습니다.</p>
-                        )}
+    const renderPlaceList = (items, category, planIndex) => {
+        return items?.map((item, i) => {
+            const expandedKey = `${planIndex}-${category}-${i}`;
+            
+            return (
+                <li key={`${category}-${i}`} style={{ marginBottom: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span>{item}</span>
                         <button
-                            onClick={() => handleReviewClick(item)}
+                            onClick={() => handlePlaceDetailClick(planIndex, `${category}-${i}`, item)}
                             style={{
-                                backgroundColor: '#2196F3',
+                                backgroundColor: '#4CAF50',
                                 color: 'white',
                                 border: 'none',
                                 padding: '5px 10px',
                                 borderRadius: '5px',
                                 cursor: 'pointer',
-                                marginTop: '10px'
+                                marginLeft: '10px'
                             }}
                         >
-                            리뷰 작성
+                            장소 세부정보
                         </button>
                     </div>
-                )}
-            </li>
-        ));
+                    {expandedPlaces[expandedKey] && (
+                        <div style={{ marginTop: '10px', marginLeft: '20px' }}>
+                            {loadingDetails ? (
+                                <p>세부정보를 불러오는 중...</p>
+                            ) : placeDetails[item]?.reviews?.length > 0 ? (
+                                <div>
+                                    <h4>리뷰 목록</h4>
+                                    {placeDetails[item].reviews.map((review, index) => (
+                                        <div key={index} style={{
+                                            backgroundColor: '#f5f5f5',
+                                            padding: '10px',
+                                            marginBottom: '10px',
+                                            borderRadius: '5px'
+                                        }}>
+                                            <p><strong>별점:</strong> {'★'.repeat(review.rating)}</p>
+                                            <p><strong>내용:</strong> {review.content}</p>
+                                            <p><strong>작성일:</strong> {new Date(review.createdAt).toLocaleDateString('ko-KR')}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p>작성된 리뷰가 없습니다.</p>
+                            )}
+                            <button
+                                onClick={() => handleReviewClick(item)}
+                                style={{
+                                    backgroundColor: '#2196F3',
+                                    color: 'white',
+                                    border: 'none',
+                                    padding: '5px 10px',
+                                    borderRadius: '5px',
+                                    cursor: 'pointer',
+                                    marginTop: '10px'
+                                }}
+                            >
+                                리뷰 작성
+                            </button>
+                        </div>
+                    )}
+                </li>
+            );
+        });
     };
 
     return (
@@ -333,11 +347,11 @@ const MyPlan = () => {
                                     </div>
                                     <ul style={{ textAlign: 'left', marginTop: '10px' }}>
                                         <li><strong>관광지</strong></li>
-                                        {renderPlaceList(plan.attractions, 'attraction')}
+                                        {renderPlaceList(plan.attractions, 'attraction', index)}
                                         <li><strong>숙소</strong></li>
-                                        {renderPlaceList(plan.hotels, 'hotel')}
+                                        {renderPlaceList(plan.hotels, 'hotel', index)}
                                         <li><strong>음식점</strong></li>
-                                        {renderPlaceList(plan.restaurants, 'restaurant')}
+                                        {renderPlaceList(plan.restaurants, 'restaurant', index)}
                                     </ul>
                                 </div>
                             ))
