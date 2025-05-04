@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PlanContext } from '../components/PlanContext';
 import Navbar from './Navbar';
+import Mygroup from './Mygroup';
 
 const ReviewModal = ({ isOpen, onClose, onSubmit, placeName, message }) => {
     const [rating, setRating] = useState(5);
@@ -84,6 +85,7 @@ const ReviewModal = ({ isOpen, onClose, onSubmit, placeName, message }) => {
 const MyPlan = () => {
     const navigate = useNavigate();
     const { plans, setPlans } = useContext(PlanContext);
+    const [activeTab, setActiveTab] = useState('plans'); // 'plans' 또는 'groups'
     const [loading, setLoading] = useState(true);
     const [expandedPlaces, setExpandedPlaces] = useState({});
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -308,60 +310,96 @@ const MyPlan = () => {
         <div>
             <Navbar />
             <div style={{ textAlign: 'center', marginTop: '50px' }}>
-                <h1>내 일정</h1>
-                {reviewMessage && (
-                    <div style={{
-                        padding: '10px',
-                        margin: '10px 0',
-                        backgroundColor: reviewMessage.includes('실패') ? '#ffebee' : '#e8f5e9',
-                        color: reviewMessage.includes('실패') ? '#c62828' : '#2e7d32',
-                        borderRadius: '5px'
-                    }}>
-                        {reviewMessage}
-                    </div>
-                )}
-                {loading ? (
-                    <p>일정을 불러오는 중입니다...</p>
-                ) : (
-                    <div>
-                        {plans.length === 0 ? (
-                            <p>저장된 일정이 없습니다</p>
-                        ) : (
-                            plans.map((plan, index) => (
-                                <div key={index} style={{
-                                    border: '1px solid #ddd',
-                                    margin: '10px',
-                                    padding: '15px',
-                                    borderRadius: '8px'
-                                }}>
-                                    <div style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center'
-                                    }}>
-                                        <p style={{ fontWeight: 'bold', margin: 0 }}>일정 {index + 1}</p>
-                                        <button onClick={() => handleDelete(plan.id)} style={{ backgroundColor: '#ff4444', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}>
-                                            삭제
-                                        </button>
-                                    </div>
-                                    <ul style={{ textAlign: 'left', marginTop: '10px' }}>
-                                        <li><strong>관광지</strong></li>
-                                        {renderPlaceList(plan.places.filter(p => p.type === 'ATTRACTION'), 'attraction', index)}
+                <div style={{ marginBottom: '20px' }}>
+                    <button 
+                        onClick={() => setActiveTab('plans')}
+                        style={{
+                            padding: '10px 20px',
+                            marginRight: '10px',
+                            backgroundColor: activeTab === 'plans' ? '#2df0b2' : '#e0e0e0',
+                            color: activeTab === 'plans' ? 'white' : 'black',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        내 일정
+                    </button>
+                    <button 
+                        onClick={() => setActiveTab('groups')}
+                        style={{
+                            padding: '10px 20px',
+                            backgroundColor: activeTab === 'groups' ? '#2df0b2' : '#e0e0e0',
+                            color: activeTab === 'groups' ? 'white' : 'black',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        내 그룹
+                    </button>
+                </div>
 
-                                        <li><strong>숙소</strong></li>
-                                        {renderPlaceList(plan.places.filter(p => p.type === 'HOTEL'), 'hotel', index)}
-
-                                        <li><strong>음식점</strong></li>
-                                        {renderPlaceList(plan.places.filter(p => p.type === 'RESTAURANT'), 'restaurant', index)}
-                                    </ul>
-                                </div>
-                            ))
+                {activeTab === 'plans' ? (
+                    <>
+                        <h1>내 일정</h1>
+                        {reviewMessage && (
+                            <div style={{
+                                padding: '10px',
+                                margin: '10px 0',
+                                backgroundColor: reviewMessage.includes('실패') ? '#ffebee' : '#e8f5e9',
+                                color: reviewMessage.includes('실패') ? '#c62828' : '#2e7d32',
+                                borderRadius: '5px'
+                            }}>
+                                {reviewMessage}
+                            </div>
                         )}
-                    </div>
+                        {loading ? (
+                            <p>일정을 불러오는 중입니다...</p>
+                        ) : (
+                            <div>
+                                {plans.length === 0 ? (
+                                    <p>저장된 일정이 없습니다</p>
+                                ) : (
+                                    plans.map((plan, index) => (
+                                        <div key={index} style={{
+                                            border: '1px solid #ddd',
+                                            margin: '10px',
+                                            padding: '15px',
+                                            borderRadius: '8px'
+                                        }}>
+                                            <div style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                alignItems: 'center'
+                                            }}>
+                                                <p style={{ fontWeight: 'bold', margin: 0 }}>일정 {index + 1}</p>
+                                                <button onClick={() => handleDelete(plan.id)} style={{ backgroundColor: '#ff4444', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}>
+                                                    삭제
+                                                </button>
+                                            </div>
+                                            <ul style={{ textAlign: 'left', marginTop: '10px' }}>
+                                                <li><strong>관광지</strong></li>
+                                                {renderPlaceList(plan.places.filter(p => p.type === 'ATTRACTION'), 'attraction', index)}
+
+                                                <li><strong>숙소</strong></li>
+                                                {renderPlaceList(plan.places.filter(p => p.type === 'HOTEL'), 'hotel', index)}
+
+                                                <li><strong>음식점</strong></li>
+                                                {renderPlaceList(plan.places.filter(p => p.type === 'RESTAURANT'), 'restaurant', index)}
+                                            </ul>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        )}
+                        <button onClick={() => navigate('/destination')} style={{ marginTop: '20px', backgroundColor: '#2df0b2', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>
+                            일정 만들러 가기
+                        </button>
+                    </>
+                ) : (
+                    <Mygroup />
                 )}
-                <button onClick={() => navigate('/destination')} style={{ marginTop: '20px', backgroundColor: '#2df0b2', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>
-                    일정 만들러 가기
-                </button>
             </div>
             <ReviewModal
                 isOpen={isReviewModalOpen}
