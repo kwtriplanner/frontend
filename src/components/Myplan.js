@@ -94,9 +94,7 @@ const MyPlan = () => {
     const [loadingDetails, setLoadingDetails] = useState(false);
 
     useEffect(() => {
-        const username = localStorage.getItem('username');
-        console.log(username)
-        fetch(`http://localhost:8086/api/plans?username=${username}`, {
+        fetch(`http://localhost:8086/api/plans`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -239,15 +237,16 @@ const MyPlan = () => {
     };
 
     const renderPlaceList = (items, category, planIndex) => {
+        
         return items?.map((item, i) => {
             const expandedKey = `${planIndex}-${category}-${i}`;
             
             return (
                 <li key={`${category}-${i}`} style={{ marginBottom: '10px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span>{item}</span>
+                        <span>{item.name}</span>
                         <button
-                            onClick={() => handlePlaceDetailClick(planIndex, `${category}-${i}`, item)}
+                            onClick={() => handlePlaceDetailClick(planIndex, `${category}-${i}`, item.name)}
                             style={{
                                 backgroundColor: '#4CAF50',
                                 color: 'white',
@@ -265,10 +264,10 @@ const MyPlan = () => {
                         <div style={{ marginTop: '10px', marginLeft: '20px' }}>
                             {loadingDetails ? (
                                 <p>세부정보를 불러오는 중...</p>
-                            ) : placeDetails[item]?.reviews?.length > 0 ? (
+                            ) : placeDetails[item.name]?.reviews?.length > 0 ? (
                                 <div>
                                     <h4>리뷰 목록</h4>
-                                    {placeDetails[item].reviews.map((review, index) => (
+                                    {placeDetails[item.name].reviews.map((review, index) => (
                                         <div key={index} style={{
                                             backgroundColor: '#f5f5f5',
                                             padding: '10px',
@@ -285,7 +284,7 @@ const MyPlan = () => {
                                 <p>작성된 리뷰가 없습니다.</p>
                             )}
                             <button
-                                onClick={() => handleReviewClick(item)}
+                                onClick={() => handleReviewClick(item.name)}
                                 style={{
                                     backgroundColor: '#2196F3',
                                     color: 'white',
@@ -347,11 +346,13 @@ const MyPlan = () => {
                                     </div>
                                     <ul style={{ textAlign: 'left', marginTop: '10px' }}>
                                         <li><strong>관광지</strong></li>
-                                        {renderPlaceList(plan.attractions, 'attraction', index)}
+                                        {renderPlaceList(plan.places.filter(p => p.type === 'ATTRACTION'), 'attraction', index)}
+
                                         <li><strong>숙소</strong></li>
-                                        {renderPlaceList(plan.hotels, 'hotel', index)}
+                                        {renderPlaceList(plan.places.filter(p => p.type === 'HOTEL'), 'hotel', index)}
+
                                         <li><strong>음식점</strong></li>
-                                        {renderPlaceList(plan.restaurants, 'restaurant', index)}
+                                        {renderPlaceList(plan.places.filter(p => p.type === 'RESTAURANT'), 'restaurant', index)}
                                     </ul>
                                 </div>
                             ))

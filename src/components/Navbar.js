@@ -42,7 +42,7 @@ const Navbar = () => {
             </div>
             <div style={{ flex: 1, textAlign: 'right' }}>
                 <button onClick={handleHomeClick} style={{ marginRight: '10px' }}>홈</button>
-                <button onClick={handleMyPlanClick} style={{ marginRight: '10px' }}>내 일정</button>
+                <button onClick={handleMyPlanClick} style={{ marginRight: '10px' }}>내 여행지</button>
                 <button onClick={handleSettingsClick} style={{ marginRight: '10px' }}>설정</button>
                 {isLoggedIn ? (
                     <button onClick={handleLogout} style={{ marginRight: '10px' }}>로그아웃</button>

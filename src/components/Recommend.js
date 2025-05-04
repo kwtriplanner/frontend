@@ -15,12 +15,21 @@ const Recommend = () => {
     const handleSaveAllPlans = () => {
         // 전체 추천 항목을 백엔드에 저장하는 함수
         const allItems = {
-            username: localStorage.getItem("username"),
-            추천된관광지: (recommendations['추천된 관광지'] || []).map(item => item.title),
-            추천된숙박: (recommendations['추천된 숙박'] || []).map(item => item.title),
-            추천된음식점: (recommendations['추천된 음식점'] || []).map(item => item.title),
+            places: [
+                ...recommendations['추천된 관광지'].map(item => ({
+                    name: item.title,
+                    type: "ATTRACTION"
+                })),
+                ...recommendations['추천된 숙박'].map(item => ({
+                    name: item.title,
+                    type: "HOTEL"
+                })),
+                ...recommendations['추천된 음식점'].map(item => ({
+                    name: item.title,
+                    type: "RESTAURANT"
+                }))
+            ]
         };
-
         // 백엔드에 저장 요청
         fetch('http://localhost:8086/api/plans', {
             method: 'POST',
