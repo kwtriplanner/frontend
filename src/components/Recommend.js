@@ -102,7 +102,11 @@ const Recommend = () => {
         })
             .then(response => response.json())
             .then(data => {
-                setGroups(data.map(([id, name]) => ({ id, name })));
+                const formattedGroups = data.map(group => ({
+                    id: group.id,
+                    name: group.name
+                }));
+                setGroups(formattedGroups);
             })
             .catch(error => {
                 setError('그룹 목록을 불러오지 못했습니다.');
@@ -141,6 +145,7 @@ const Recommend = () => {
                 return response.json();
             })
             .then(plan => {
+                console.log('그룹에 저장');
                 // 2. 그룹에 저장
                 return fetch(`http://localhost:8086/api/plans/groups/${groupId}`, {
                     method: 'POST',
@@ -148,10 +153,11 @@ const Recommend = () => {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     },
-                    body: JSON.stringify({ planId: plan.id }),
+                    body: JSON.stringify({ planId: plan.planId }),
                 });
             })
             .then(response => {
+                console.log('Saved to group:', response);
                 if (!response.ok) throw new Error('Failed to save plan to group');
                 setSuccessMessage('그룹에 저장되었습니다.');
                 setShowGroupModal(false);

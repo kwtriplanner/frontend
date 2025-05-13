@@ -222,31 +222,19 @@ const InviteListModal = ({ isOpen, onClose, invites, onAccept, onReject }) => {
                 {invites.length === 0 ? (
                     <p>받은 초대가 없습니다</p>
                 ) : (
-                    invites.map(([hostId, groupName, inviteId], index) => (
+                    console.log('Received invites:', invites) || // ✅ 콘솔 로그 추가   
+                    invites.map((invite, index) => ( // ✅ 객체로 구조 분해
                         <div key={index} style={{
                             border: '1px solid #ddd',
                             margin: '10px 0',
                             padding: '15px',
                             borderRadius: '8px'
                         }}>
-                            <h3 style={{ margin: 0 }}>{groupName}</h3>
-                            <p>초대자 ID: {hostId}</p>
+                            <h3 style={{ margin: 0 }}>{invite.groupName}    </h3>
+                            <p>초대자: {invite.inviterUsername}</p>
                             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-                                <button 
-                                    onClick={() => onReject(inviteId)}
-                                    style={{ 
-                                        backgroundColor: '#ff4444', 
-                                        color: 'white', 
-                                        border: 'none', 
-                                        padding: '5px 10px', 
-                                        borderRadius: '5px', 
-                                        cursor: 'pointer' 
-                                    }}
-                                >
-                                    거절
-                                </button>
-                                <button 
-                                    onClick={() => onAccept(inviteId)}
+                            <button 
+                                    onClick={() => onAccept(invite.inviteId)}
                                     style={{ 
                                         backgroundColor: '#2df0b2', 
                                         color: 'white', 
@@ -257,6 +245,19 @@ const InviteListModal = ({ isOpen, onClose, invites, onAccept, onReject }) => {
                                     }}
                                 >
                                     수락
+                                </button>
+                                <button 
+                                    onClick={() => onReject(invite.inviteId)}
+                                    style={{ 
+                                        backgroundColor: '#ff4444', 
+                                        color: 'white', 
+                                        border: 'none', 
+                                        padding: '5px 10px', 
+                                        borderRadius: '5px', 
+                                        cursor: 'pointer' 
+                                    }}
+                                >
+                                    거절
                                 </button>
                             </div>
                         </div>
@@ -281,6 +282,7 @@ const InviteListModal = ({ isOpen, onClose, invites, onAccept, onReject }) => {
         </div>
     );
 };
+
 
 const Mygroup = () => {
     const navigate = useNavigate();
@@ -311,13 +313,14 @@ const Mygroup = () => {
                 return response.json();
             })
             .then(data => {
-                const formattedGroups = data.map(([id, name]) => ({
-                    id,
-                    name
+                const formattedGroups = data.map(group => ({
+                    id: group.id,
+                    name: group.name
                 }));
                 setGroups(formattedGroups);
                 setLoading(false);
             })
+            
             .catch(error => {
                 console.error('Error fetching groups:', error);
                 setLoading(false);
@@ -332,7 +335,7 @@ const Mygroup = () => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify({
-                GroupName: groupName
+                groupName: groupName
             })
         })
         .then(response => {
@@ -429,32 +432,38 @@ const Mygroup = () => {
         });
     };
 
-    const handleInviteResponse = (inviteId, state) => {
+    const handleInviteResponse = (inviteId, status) => {
+        console.log('Responding to invite:', inviteId, status);
         fetch(`http://localhost:8086/api/invite/${inviteId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
-            body: JSON.stringify({
-                inviteId: inviteId,
-                state: state
-            })
+            body: JSON.stringify({ status: status }) // ✅ inviteId는 URL 경로로 전달
         })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to respond to invitation');
-            }
-            setInvites(invites.filter(([_, __, id]) => id !== inviteId));
-            setMessage(state === 'accept' ? '초대를 수락했습니다' : '초대를 거절했습니다');
+            if (!response.ok) throw new Error('Failed to respond to invitation');
+            return response.json(); // ✅ JSON 파싱
+        })
+        .then(data => {
+            // ✅ 객체 배열 필터링 방식 변경
+            setInvites(prevInvites => 
+                prevInvites.filter(invite => invite.inviteId !== inviteId)
+            );
+            setMessage(status === 'accept' 
+                ? '초대를 수락했습니다' 
+                : '초대를 거절했습니다'
+            );
             setTimeout(() => setMessage(''), 3000);
         })
         .catch(error => {
-            console.error('Error responding to invitation:', error);
+            console.error('Error:', error);
             setMessage('초대 응답에 실패했습니다');
             setTimeout(() => setMessage(''), 3000);
         });
     };
+    
 
     return (
         <div>
@@ -523,6 +532,7 @@ const Mygroup = () => {
                                         </button>
                                     </div>
                                 </div>
+                                <p>그룹 이름: {group.name}</p>
                                 <p>그룹 ID: {group.id}</p>
                             </div>
                         ))
