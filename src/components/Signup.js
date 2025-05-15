@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8086';
 
 function Signup() {
     const [name, setName] = useState('');
@@ -26,7 +29,7 @@ function Signup() {
 
         // 백엔드 API 호출 (주석 처리)
         setIsSubmitting(true);
-        fetch('http://localhost:8086/api/auth/signup', {
+        fetch(`${BACKEND_URL}/api/auth/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

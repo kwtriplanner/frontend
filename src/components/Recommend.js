@@ -3,6 +3,9 @@ import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar'; // Navbar 컴포넌트 가져오기
 import { PlanContext } from '../components/PlanContext'; // PlanContext 가져오기
 
+const MODEL_URL = process.env.REACT_APP_MODEL_URL || 'http://127.0.0.1:5000';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8086';
+
 const Recommend = () => {
     const location = useLocation(); // 현재 위치 정보 가져오기
     const { selectedCity, selectedTransport, selectedStyle, selectedActivity } = location.state || {}; // 선택된 도시, 이동수단, 일정 스타일, 선택된 활동 정보 가져오기
@@ -35,7 +38,7 @@ const Recommend = () => {
             ]
         };
         // 백엔드에 저장 요청
-        fetch('http://localhost:8086/api/plans', {
+        fetch(`${BACKEND_URL}/api/plans`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,7 +66,7 @@ const Recommend = () => {
 
     const fetchRecommendations = () => {
         const token = localStorage.getItem('token'); // 토큰 가져오기
-        fetch('http://127.0.0.1:5000/recommend', {
+        fetch(`${MODEL_URL}/recommend`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -94,7 +97,7 @@ const Recommend = () => {
 
     // 내 그룹 목록 불러오기
     const fetchGroups = () => {
-        fetch('http://localhost:8086/api/groups', {
+        fetch(`${BACKEND_URL}/api/groups`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -132,7 +135,7 @@ const Recommend = () => {
             ]
         };
         // 1. 내 일정에 저장
-        fetch('http://localhost:8086/api/plans', {
+        fetch(`${BACKEND_URL}/api/plans`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -147,7 +150,7 @@ const Recommend = () => {
             .then(plan => {
                 console.log('그룹에 저장');
                 // 2. 그룹에 저장
-                return fetch(`http://localhost:8086/api/plans/groups/${groupId}`, {
+                return fetch(`${BACKEND_URL}/api/plans/groups/${groupId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

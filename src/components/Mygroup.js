@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8086';
+
 const CreateGroupModal = ({ isOpen, onClose, onSubmit }) => {
     const [groupName, setGroupName] = useState('');
     const [message, setMessage] = useState('');
@@ -300,7 +302,7 @@ const Mygroup = () => {
     }, []);
 
     const fetchGroups = () => {
-        fetch(`http://localhost:8086/api/groups`, {
+        fetch(`${BACKEND_URL}/api/groups`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -328,7 +330,7 @@ const Mygroup = () => {
     };
 
     const handleCreateGroup = (groupName) => {
-        fetch('http://localhost:8086/api/groups/add', {
+        fetch(`${BACKEND_URL}/api/groups/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -359,7 +361,7 @@ const Mygroup = () => {
 
     const handleDeleteGroup = (groupId) => {
         if (window.confirm('정말로 이 그룹을 삭제하시겠습니까?')) {
-            fetch(`http://localhost:8086/api/groups/${groupId}`, {
+            fetch(`${BACKEND_URL}/api/groups/${groupId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -382,7 +384,7 @@ const Mygroup = () => {
     };
 
     const handleInvite = (username, groupId) => {
-        fetch('http://localhost:8086/api/groups/invite', {
+        fetch(`${BACKEND_URL}/api/groups/invite`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -409,7 +411,7 @@ const Mygroup = () => {
     };
 
     const fetchInvites = () => {
-        fetch('http://localhost:8086/api/invite', {
+        fetch(`${BACKEND_URL}/api/invite`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -434,7 +436,7 @@ const Mygroup = () => {
 
     const handleInviteResponse = (inviteId, status) => {
         console.log('Responding to invite:', inviteId, status);
-        fetch(`http://localhost:8086/api/invite/${inviteId}`, {
+        fetch(`${BACKEND_URL}/api/invite/${inviteId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

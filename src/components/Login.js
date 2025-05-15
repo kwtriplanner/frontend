@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8086';
 
 function Login({ onLoginSuccess }) {
     const [username, setUsername] = useState('');
@@ -8,7 +11,7 @@ function Login({ onLoginSuccess }) {
     const handleLogin = () => {
         // 백엔드 API 호출 (주석 처리)
 
-        fetch('http://localhost:8086/api/auth/login', {
+        fetch(`${BACKEND_URL}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

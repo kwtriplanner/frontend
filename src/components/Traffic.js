@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './Navbar'; // Navbar 컴포넌트 가져오기
 
+const MODEL_URL = process.env.REACT_APP_MODEL_URL || 'http://127.0.0.1:5000';
+
 const Traffic = () => {
     const navigate = useNavigate(); // navigate 함수 초기화
     const location = useLocation(); // 현재 위치 정보 가져오기
@@ -13,7 +15,7 @@ const Traffic = () => {
         console.log('Selected Transport:', selectedTransport);
         
         // 백엔드로 데이터 전송
-        fetch('http://127.0.0.1:5000/recommend', {
+        fetch(`${MODEL_URL}/recommend`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

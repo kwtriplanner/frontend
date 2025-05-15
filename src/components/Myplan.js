@@ -4,6 +4,8 @@ import { PlanContext } from '../components/PlanContext';
 import Navbar from './Navbar';
 import Mygroup from './Mygroup';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8086';
+
 const ReviewModal = ({ isOpen, onClose, onSubmit, placeName, message }) => {
     const [rating, setRating] = useState(5);
     const [content, setContent] = useState('');
@@ -96,7 +98,7 @@ const MyPlan = () => {
     const [loadingDetails, setLoadingDetails] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:8086/api/plans`, {
+        fetch(`${BACKEND_URL}/api/plans`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -121,7 +123,7 @@ const MyPlan = () => {
     const handleDelete = (planId) => {
         // 삭제 확인을 위한 창 표시
         if (window.confirm('정말로 이 일정을 삭제하시겠습니까?')) {
-            fetch(`http://localhost:8086/api/plans/${planId}`, {
+            fetch(`${BACKEND_URL}/api/plans/${planId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -157,7 +159,7 @@ const MyPlan = () => {
 
         // 새로운 장소 세부정보 열기
         setLoadingDetails(true);
-        fetch(`http://localhost:8086/api/place/${encodeURIComponent(placeName)}`, {
+        fetch(`${BACKEND_URL}/api/place/${encodeURIComponent(placeName)}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -194,7 +196,7 @@ const MyPlan = () => {
     const handleReviewSubmit = (rating, content) => {
         const username = localStorage.getItem('username');
         
-        fetch('http://localhost:8086/api/review', {
+        fetch(`${BACKEND_URL}/api/review`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
