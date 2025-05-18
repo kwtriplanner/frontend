@@ -285,6 +285,119 @@ const InviteListModal = ({ isOpen, onClose, invites, onAccept, onReject }) => {
     );
 };
 
+const GroupPlansModal = ({ isOpen, onClose, groupId, groupName }) => {
+    const [plans, setPlans] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const renderPlaceList = (items, category, planIndex) => {
+        return items?.map((item, i) => (
+            <li key={`${category}-${i}`} style={{ marginBottom: '10px' }}>
+                <span>{item.name}</span>
+            </li>
+        ));
+    };
+
+    //특정 그룹의 일정 목록 호출
+    useEffect(() => {
+        if (isOpen && groupId) {
+            fetch(`${BACKEND_URL}/api/plans/groups/${groupId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch group plans');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Received data:', data);
+                setPlans(Array.isArray(data) ? data : [data]);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching group plans:', error);
+                setLoading(false);
+            });
+        }
+    }, [isOpen, groupId]);
+
+    if (!isOpen) return null;
+
+    return (
+        <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000
+        }}>
+            <div style={{
+                backgroundColor: 'white',
+                padding: '20px',
+                borderRadius: '8px',
+                width: '80%',
+                maxWidth: '800px',
+                maxHeight: '80vh',
+                overflowY: 'auto'
+            }}>
+                <h2>{groupName} 그룹 일정</h2>
+                {loading ? (
+                    <p>일정을 불러오는 중입니다...</p>
+                ) : (
+                    <div>
+                        {plans.length === 0 ? (
+                            <p>저장된 일정이 없습니다</p>
+                        ) : (
+                            plans.map((plan, index) => (
+                                <div key={index} style={{
+                                    border: '1px solid #ddd',
+                                    margin: '10px 0',
+                                    padding: '15px',
+                                    borderRadius: '8px'
+                                }}>
+                                    <h3>일정 {index + 1}</h3>
+                                    <ul style={{ textAlign: 'left' }}>
+                                        <li><strong>관광지</strong></li>
+                                        {renderPlaceList(plan.places?.filter(p => p.type === 'ATTRACTION'), 'attraction', index)}
+
+                                        <li><strong>숙소</strong></li>
+                                        {renderPlaceList(plan.places?.filter(p => p.type === 'HOTEL'), 'hotel', index)}
+
+                                        <li><strong>음식점</strong></li>
+                                        {renderPlaceList(plan.places?.filter(p => p.type === 'RESTAURANT'), 'restaurant', index)}
+                                    </ul>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                )}
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+                    <button 
+                        onClick={onClose} 
+                        style={{ 
+                            padding: '8px 16px', 
+                            backgroundColor: 'gray', 
+                            color: 'white', 
+                            border: 'none', 
+                            borderRadius: '4px', 
+                            cursor: 'pointer' 
+                        }}
+                    >
+                        닫기
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const Mygroup = () => {
     const navigate = useNavigate();
@@ -296,6 +409,8 @@ const Mygroup = () => {
     const [selectedGroupId, setSelectedGroupId] = useState(null);
     const [message, setMessage] = useState('');
     const [invites, setInvites] = useState([]);
+    const [isGroupPlansModalOpen, setIsGroupPlansModalOpen] = useState(false);
+    const [selectedGroupName, setSelectedGroupName] = useState('');
 
     useEffect(() => {
         fetchGroups();
@@ -329,6 +444,7 @@ const Mygroup = () => {
             });
     };
 
+    //그룹 생성
     const handleCreateGroup = (groupName) => {
         fetch(`${BACKEND_URL}/api/groups/add`, {
             method: 'POST',
@@ -520,6 +636,23 @@ const Mygroup = () => {
                                             초대
                                         </button>
                                         <button 
+                                            onClick={() => {
+                                                setSelectedGroupId(group.id);
+                                                setSelectedGroupName(group.name);
+                                                setIsGroupPlansModalOpen(true);
+                                            }}
+                                            style={{ 
+                                                backgroundColor: '#4CAF50', 
+                                                color: 'white', 
+                                                border: 'none', 
+                                                padding: '5px 10px', 
+                                                borderRadius: '5px', 
+                                                cursor: 'pointer' 
+                                            }}
+                                        >
+                                            일정 보기
+                                        </button>
+                                        <button 
                                             onClick={() => handleDeleteGroup(group.id)} 
                                             style={{ 
                                                 backgroundColor: '#ff4444', 
@@ -586,6 +719,12 @@ const Mygroup = () => {
                 invites={invites}
                 onAccept={(inviteId) => handleInviteResponse(inviteId, 'accept')}
                 onReject={(inviteId) => handleInviteResponse(inviteId, 'reject')}
+            />
+            <GroupPlansModal
+                isOpen={isGroupPlansModalOpen}
+                onClose={() => setIsGroupPlansModalOpen(false)}
+                groupId={selectedGroupId}
+                groupName={selectedGroupName}
             />
         </div>
     );
